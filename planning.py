@@ -125,6 +125,10 @@ def rrt(
             alpha = np.array(qG)
         else:
             alpha = sample(cspace)
+        # TODO: Do we need to do this on PRM as well?
+        # Try to connect on the last iteration
+        if i == numIt - 1:
+            alpha = np.array(qG)
         vn = G.get_nearest(alpha, distance_computator, tol)
         qn = G.get_vertex_state(vn)
         (qs, edge) = stopping_configuration(

@@ -174,9 +174,9 @@ if __name__ == "__main__":
     # TODO: Edit how our obstacles are created.
     # Might have to pass them in as arguments
     # We will only have circular obstacles for now
-
     # obstacles = construct_circular_obstacles(0.2)
-    obstacles = construct_circular_obstacles(90)
+    obstacles = construct_circular_obstacles(95)
+
     obs_boundaries = [obstacle.get_boundaries() for obstacle in obstacles]
     world_boundary = WorldBoundary2D(cspace[0], cspace[1])
     obstacles.append(world_boundary)
