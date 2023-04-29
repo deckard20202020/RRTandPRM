@@ -38,5 +38,49 @@ def get_euclidean_distance(s1, s2):
 
 def is_inside_circle(c, r, p):
     """Return whether point p is inside a circle with radius r, centered at c"""
-    return (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 <= r ** 2
+    # return (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 <= r ** 2
+
+    # Editing for our turtlebot3
+    # Width = 178, Length = 138
+    # idea: We will draw a circle around our turtlebot and make sure this
+    # circle doesn't intersect any of our obstacles
+    # What if there is a big difference in size between our obstacles and our robot???
+        # Do we need to make sure none of the obstacles contain our robot
+        # And make sure our robot doesn't contain our obstacles as well?
+
+    # we know our robot has Width = 178 and Length = 138.  We will just hard code these for now
+    width = 178
+    length = 138
+    radius = findRadiusOfRobot(width, length)
+
+    # p will be the center of our robot
+
+    # Make a circle surrounding the robot
+    robotCircle = p.buffer(radius)
+
+    # Make a circle for the obstacle
+    obstacleCircle = c.buffer(r)
+
+    # Make sure the robot circle doesn't intersect with the obstacle
+    if robotCircle.intersects(obstacleCircle):
+        return True
+
+    # Check to see if robot is inside obstacle
+    if robotCircle.within(obstacleCircle):
+        return True
+
+    # Check to see if obstacle circle is inside robot circle
+    if obstacleCircle.within(robotCircle):
+        return True
+
+    return False
+
+
+def findRadiusOfRobot(w, l):
+
+    radius = math.sqrt(w**2 + l**2)
+    # add one just to be on the safe side
+    radius = radius + 1
+
+    return radius
 

@@ -165,6 +165,10 @@ if __name__ == "__main__":
     cspace = [(-3, 3), (-1, 1), (-math.pi / 2, math.pi / 2)]
     qI = (-2, -0.5, 0)
     qG = (2, -0.5, math.pi / 2)
+    # TODO: We will need to edit how our obstacles are created.
+    # Might have to pass them in as arguments
+    # We will only have circular obstacles for now
+
     obstacles = construct_circular_obstacles(0.2)
     obs_boundaries = [obstacle.get_boundaries() for obstacle in obstacles]
     world_boundary = WorldBoundary2D(cspace[0], cspace[1])
@@ -172,6 +176,8 @@ if __name__ == "__main__":
     edge_creator = DubinsEdgeCreator(rho_min, 0.1)
     collision_checker = ObstacleCollisionChecker(obstacles)
     distance_computator = DubinsDistanceComputator(rho_min)
+
+    # Our robot W=178 and L 138
 
     args = parse_args()
     if args.alg == ALG_RRT:
