@@ -161,15 +161,22 @@ def parse_args():
 
 
 if __name__ == "__main__":
+    # TODO: Change min turning radius
     rho_min = 0.5
-    cspace = [(-3, 3), (-1, 1), (-math.pi / 2, math.pi / 2)]
-    qI = (-2, -0.5, 0)
-    qG = (2, -0.5, math.pi / 2)
-    # TODO: We will need to edit how our obstacles are created.
+    # cspace = [(-3, 3), (-1, 1), (-math.pi / 2, math.pi / 2)]
+    # qI = (-2, -0.5, 0)
+    # qG = (2, -0.5, math.pi / 2)
+
+    cspace = [(-400, 400), (-300, 300), (-math.pi / 2, math.pi / 2)]
+    qI = (-300, -100, 0)
+    qG = (300, -100, math.pi / 2)
+
+    # TODO: Edit how our obstacles are created.
     # Might have to pass them in as arguments
     # We will only have circular obstacles for now
 
-    obstacles = construct_circular_obstacles(0.2)
+    # obstacles = construct_circular_obstacles(0.2)
+    obstacles = construct_circular_obstacles(90)
     obs_boundaries = [obstacle.get_boundaries() for obstacle in obstacles]
     world_boundary = WorldBoundary2D(cspace[0], cspace[1])
     obstacles.append(world_boundary)

@@ -1,5 +1,7 @@
 import math
 import numpy as np
+from shapely import geometry
+from shapely.geometry import Point
 
 
 def get_nearest_point_on_line(s1, s2, p, tol=1e-3):
@@ -48,18 +50,29 @@ def is_inside_circle(c, r, p):
         # Do we need to make sure none of the obstacles contain our robot
         # And make sure our robot doesn't contain our obstacles as well?
 
+    # print("This is c")
+    # print(c)
+    # print()
+    # print("This is p")
+    # print(p)
+    # print()
+
     # we know our robot has Width = 178 and Length = 138.  We will just hard code these for now
     width = 178
     length = 138
     radius = findRadiusOfRobot(width, length)
 
     # p will be the center of our robot
+    robotPoint = (p[0], p[1])
+    # print("This is RobotPoint")
+    # print(robotPoint)
+    # print()
 
     # Make a circle surrounding the robot
-    robotCircle = p.buffer(radius)
+    robotCircle = Point(robotPoint).buffer(radius)
 
     # Make a circle for the obstacle
-    obstacleCircle = c.buffer(r)
+    obstacleCircle = Point(c).buffer(r)
 
     # Make sure the robot circle doesn't intersect with the obstacle
     if robotCircle.intersects(obstacleCircle):
@@ -67,12 +80,16 @@ def is_inside_circle(c, r, p):
 
     # Check to see if robot is inside obstacle
     if robotCircle.within(obstacleCircle):
+        print("robot circle is inside obstacle circle")
         return True
 
     # Check to see if obstacle circle is inside robot circle
     if obstacleCircle.within(robotCircle):
+        print("Obstacle circle is inside robot circle")
+        print()
         return True
 
+    # print("Not In Collision")
     return False
 
 

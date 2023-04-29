@@ -53,8 +53,8 @@ class WorldBoundary2D(Obstacle):
 
 
 def construct_circular_obstacles(dt):
-    r = 1 - dt  # the radius of the circle
-    c = [(0, -1), (0, 1)]  # the center of each circle
+    r = 100 - dt  # the radius of the circle
+    c = [(0, -100), (0, 100)]  # the center of each circle
     t = [(0, math.pi), (-math.pi, 0)]  # range of theta of each circle
     obstacles = []
     for i in range(len(c)):
