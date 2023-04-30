@@ -12,6 +12,7 @@ from dubins import shortest_path
 from edge import Edge
 from obstacle import construct_circular_obstacles, WorldBoundary2D
 from draw_cspace import draw
+import time
 
 ALG_RRT = "rrt"
 ALG_PRM = "prm"
@@ -208,7 +209,8 @@ def findPathLength(G, path):
 
 if __name__ == "__main__":
     # TODO: Change min turning radius
-    rho_min = 0.5
+    # rho_min = 0.5
+    rho_min = 10
     # cspace = [(-3, 3), (-1, 1), (-math.pi / 2, math.pi / 2)]
     # qI = (-2, -0.5, 0)
     # qG = (2, -0.5, math.pi / 2)
@@ -242,6 +244,8 @@ if __name__ == "__main__":
     numberOfFoundPaths = 0
     sumOfAllLengths = 0
     totalCount = 0
+    startTime = time.time()
+    endTime = 0
     for i in range(numberOfIterations):
         if args.alg == ALG_RRT:
             title = "RRT planning"
@@ -298,6 +302,7 @@ if __name__ == "__main__":
             print()
 
             # This gets a very discretized path
+            # This is what I want to send to ROS
             path = G.get_path(root, goal)
 
         print("We are drawing the graph")
@@ -305,6 +310,8 @@ if __name__ == "__main__":
         draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
         plt.show()
 
+    endTime = time.time()
+    totalTime = endTime - startTime
     print("---------------------------------------------------------------------------------")
     print("You ran the algorithm this many times")
     print(numberOfIterations)
@@ -320,6 +327,10 @@ if __name__ == "__main__":
     print(sumOfAllLengths)
     print("This is the average of all path lengths")
     print(sumOfAllLengths / numberOfIterations)
+    print("This is the total time for all iterations of the algorithm")
+    print(totalTime)
+    print("This is the average time for each iteration of the algorithm")
+    print(totalTime / numberOfIterations)
 
 
 
