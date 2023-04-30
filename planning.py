@@ -119,7 +119,9 @@ def rrt(
     """
     G = Tree()
     root = G.add_vertex(np.array(qI))
+    count = 0
     for i in range(numIt):
+        count = count + 1
         use_goal = qG is not None and random.uniform(0, 1) <= pG
         if use_goal:
             alpha = np.array(qG)
@@ -141,9 +143,9 @@ def rrt(
             vs = G.add_vertex(qs)
             G.add_edge(vn, vs, edge)
             if use_goal and get_euclidean_distance(qs, qG) < tol:
-                return (G, root, vs)
+                return (G, root, vs, count)
 
-    return (G, root, None)
+    return (G, root, None, count)
 
 
 def prm(

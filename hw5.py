@@ -191,13 +191,14 @@ if __name__ == "__main__":
     # Our robot W=178 and L 138
 
     args = parse_args()
-    numberOfIterations = 100
+    numberOfIterations = 1
     sumOfPathLengths = 0
     numberOfFoundPaths = 0
+    totalCount = 0
     for i in range(numberOfIterations):
         if args.alg == ALG_RRT:
             title = "RRT planning"
-            (G, root, goal) = rrt(
+            (G, root, goal, count) = rrt(
                 cspace=cspace,
                 qI=qI,
                 qG=qG,
@@ -216,6 +217,12 @@ if __name__ == "__main__":
                 collision_checker=collision_checker,
                 k=15,
             )
+
+        print("This is the number of iterations")
+        print(count)
+        totalCount = totalCount + count
+        print("This is the sum of iterations so far")
+        print(totalCount)
 
         path = []
         if root is not None and goal is not None:
@@ -240,11 +247,15 @@ if __name__ == "__main__":
         # fig, ax = plt.subplots(1, 1)
         # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
         # plt.show()
-
+    print("---------------------------------------------------------------------------------")
     print("This is the number of found paths")
     print(numberOfFoundPaths)
-    print("This is the average number of verticies along the paths")
+    print("This is the average number of vertices along the paths")
     print(sumOfPathLengths / numberOfIterations)
+    print("This is the total number of iterations")
+    print(totalCount)
+    print("This is the average number of iterations")
+    print(totalCount / numberOfIterations)
 
 
 
