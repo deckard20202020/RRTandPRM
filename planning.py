@@ -93,7 +93,7 @@ def rrt(
         distance_computator,
         collision_checker,
         pG=0.1,
-        numIt=100,
+        numIt=200,
         tol=1e-3,
 ):
     """RRT with obstacles
@@ -157,7 +157,7 @@ def prm(
         collision_checker,
         k,
         #TODO: If you edit this you need to edit the count in hw5
-        numIt=100,
+        numIt=200,
         tol=1e-3,
 ):
     """PRM with obstacles

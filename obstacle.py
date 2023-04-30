@@ -57,13 +57,13 @@ def construct_circular_obstacles(dt):
     # c = [(0, -100), (0, 100)]  # the center of each circle
     # c = [(0, -100)]  # the center of each circle
     c = []
-    r = 200
-    c = [(0, 0)]
+    r = 25
+    c = [(0, 0), (0, 500), (0, -500)]
 
     #TODO: add obstacles and change your radius
 
     # t = [(0, math.pi), (-math.pi, 0)]  # range of theta of each circle
-    t = [(0, 2 * math.pi), (-math.pi * 2, 0)]  # range of theta of each circle
+    t = [(0, 2 * math.pi), (-math.pi * 2, 0), (0, 2 * math.pi)]  # range of theta of each circle
     obstacles = []
     for i in range(len(c)):
         obstacles.append(CircularObstacle(c[i], r, t[i]))

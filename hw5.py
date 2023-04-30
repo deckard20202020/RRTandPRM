@@ -269,7 +269,7 @@ if __name__ == "__main__":
                 k=15,
             )
             #TODO: If you edit this you need to edit PRM
-            count = 100
+            count = 200
 
         print("This is the number of iterations for the algorithm")
         print(count)
