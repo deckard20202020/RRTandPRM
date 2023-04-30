@@ -167,9 +167,13 @@ if __name__ == "__main__":
     # qI = (-2, -0.5, 0)
     # qG = (2, -0.5, math.pi / 2)
 
-    cspace = [(-400, 400), (-300, 300), (-math.pi / 2, math.pi / 2)]
-    qI = (-300, -100, 0)
-    qG = (300, -100, math.pi / 2)
+    # cspace = [(-400, 400), (-300, 300), (-math.pi / 2, math.pi / 2)]
+    # qI = (-300, -100, 0)
+    # qG = (300, -100, math.pi / 2)
+
+    cspace = [(-1000, 1000), (-1000, 1000), (-math.pi / 2, math.pi / 2)]
+    qI = (-500, 0, 0)
+    qG = (500, 0, math.pi / 2)
 
     # TODO: Edit how our obstacles are created.
     # Might have to pass them in as arguments
@@ -187,33 +191,60 @@ if __name__ == "__main__":
     # Our robot W=178 and L 138
 
     args = parse_args()
-    if args.alg == ALG_RRT:
-        title = "RRT planning"
-        (G, root, goal) = rrt(
-            cspace=cspace,
-            qI=qI,
-            qG=qG,
-            edge_creator=edge_creator,
-            distance_computator=distance_computator,
-            collision_checker=collision_checker,
-        )
-    else:
-        title = "PRM planning"
-        (G, root, goal) = prm(
-            cspace=cspace,
-            qI=qI,
-            qG=qG,
-            edge_creator=edge_creator,
-            distance_computator=distance_computator,
-            collision_checker=collision_checker,
-            k=15,
-        )
+    numberOfIterations = 100
+    sumOfPathLengths = 0
+    numberOfFoundPaths = 0
+    for i in range(numberOfIterations):
+        if args.alg == ALG_RRT:
+            title = "RRT planning"
+            (G, root, goal) = rrt(
+                cspace=cspace,
+                qI=qI,
+                qG=qG,
+                edge_creator=edge_creator,
+                distance_computator=distance_computator,
+                collision_checker=collision_checker,
+            )
+        else:
+            title = "PRM planning"
+            (G, root, goal) = prm(
+                cspace=cspace,
+                qI=qI,
+                qG=qG,
+                edge_creator=edge_creator,
+                distance_computator=distance_computator,
+                collision_checker=collision_checker,
+                k=15,
+            )
 
-    path = []
-    if root is not None and goal is not None:
-        path = G.get_path(root, goal)
+        path = []
+        if root is not None and goal is not None:
 
-    fig, ax = plt.subplots(1, 1)
-    draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
-    plt.show()
+            numberOfFoundPaths = numberOfFoundPaths + 1
+            path = G.getVerticiesAlongPath(root, goal)
+            print("This is the path")
+            print(path)
+            lengthOfCurentPath = 0
+            lengthOfCurentPath = len(path)
+            print("Length Of Current Path")
+            print(lengthOfCurentPath)
+            sumOfPathLengths = sumOfPathLengths + lengthOfCurentPath
+            print("Sum of paths so far")
+            print(sumOfPathLengths)
+            print()
+
+            # This gets a very discretized path
+            path = G.get_path(root, goal)
+
+
+        # fig, ax = plt.subplots(1, 1)
+        # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
+        # plt.show()
+
+    print("This is the number of found paths")
+    print(numberOfFoundPaths)
+    print("This is the average number of verticies along the paths")
+    print(sumOfPathLengths / numberOfIterations)
+
+
 

@@ -167,6 +167,9 @@ class Graph:
                 Q.insert(u, v, edge_cost)
         return []
 
+    def getVerticiesAlongPath(self, root_vertex, goal_vertex):
+        return self.get_vertex_path(root_vertex, goal_vertex)
+
     def get_path(self, root_vertex, goal_vertex):
         """Return a sequence of discretized states from root_vertex to goal_vertex"""
         vertex_path = self.get_vertex_path(root_vertex, goal_vertex)
