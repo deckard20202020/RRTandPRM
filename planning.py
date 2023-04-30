@@ -156,7 +156,7 @@ def prm(
         distance_computator,
         collision_checker,
         k,
-        numIt=1000,
+        numIt=100,
         tol=1e-3,
 ):
     """PRM with obstacles

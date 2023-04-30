@@ -160,6 +160,52 @@ def parse_args():
     return args
 
 
+def findPathLength(G, path):
+    # # a dictionary whose key = id of the vertex and value = state of the vertex
+    # self.vertices = {}
+
+    # a dictionary whose key = (v1, v2) and value = (cost, edge).
+    # v1 is the id of the origin vertex and v2 is the id of the destination vertex.
+    # cost is the cost of the edge.
+    # edge is of type Edge and stores information about the edge, e.g.,
+    # the origin and destination states and the discretized points along the edge
+    # self.edges = {}
+
+    totalLength = 0
+
+    for i in range(len(path) - 1):
+
+        # find the first vertex
+        firstVertexId = path[i]
+        firstVertex = G.vertices.get(firstVertexId)
+        # print("This is the first vertex")
+        # print(firstVertex)
+
+        # find the second vertex
+        secondVertexId = path[i + 1]
+        secondVertex = G.vertices.get(secondVertexId)
+        # print("This is the second vertex")
+        # print(secondVertex)
+
+        # Put the vertices in key format
+        key = (firstVertexId, secondVertexId)
+
+        # find the edge associated with those
+        edge = G.edges.get(key)
+        # print("This is the edge")
+        # print(edge)
+        # print()
+
+        # find the length of that edge
+        length = edge[0]
+
+        # update our totalLength
+        totalLength = totalLength + length
+
+
+    return totalLength
+
+
 if __name__ == "__main__":
     # TODO: Change min turning radius
     rho_min = 0.5
@@ -191,9 +237,10 @@ if __name__ == "__main__":
     # Our robot W=178 and L 138
 
     args = parse_args()
-    numberOfIterations = 1
-    sumOfPathLengths = 0
+    numberOfIterations = 10
+    sumOfVerticiesAlongAllPaths = 0
     numberOfFoundPaths = 0
+    sumOfAllLengths = 0
     totalCount = 0
     for i in range(numberOfIterations):
         if args.alg == ALG_RRT:
@@ -217,27 +264,37 @@ if __name__ == "__main__":
                 collision_checker=collision_checker,
                 k=15,
             )
+            #TODO: If you edit this you need to edit PRM
+            count = 100
 
-        print("This is the number of iterations")
+        print("This is the number of iterations for the algorithm")
         print(count)
         totalCount = totalCount + count
-        print("This is the sum of iterations so far")
+        print("This is the sum of iterations so far for the algorithm")
         print(totalCount)
 
         path = []
         if root is not None and goal is not None:
 
             numberOfFoundPaths = numberOfFoundPaths + 1
-            path = G.getVerticiesAlongPath(root, goal)
-            print("This is the path")
+            path = G.getVertexIdsAlongPath(root, goal)
+            print("These are the path Ids")
             print(path)
-            lengthOfCurentPath = 0
-            lengthOfCurentPath = len(path)
-            print("Length Of Current Path")
-            print(lengthOfCurentPath)
-            sumOfPathLengths = sumOfPathLengths + lengthOfCurentPath
-            print("Sum of paths so far")
-            print(sumOfPathLengths)
+
+            pathLength = findPathLength(G, path)
+            print("This is the path length")
+            print(pathLength)
+            sumOfAllLengths = sumOfAllLengths + pathLength
+            print("This is the sum of lengths so far")
+            print(sumOfAllLengths)
+
+            countOfVerticiesAlongPath = 0
+            countOfVerticiesAlongPath = len(path)
+            print("Number Of Vertices in Current Path")
+            print(countOfVerticiesAlongPath)
+            sumOfVerticiesAlongAllPaths = sumOfVerticiesAlongAllPaths + countOfVerticiesAlongPath
+            print("Sum of Vertices in paths so far")
+            print(sumOfVerticiesAlongAllPaths)
             print()
 
             # This gets a very discretized path
@@ -248,14 +305,20 @@ if __name__ == "__main__":
         # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
         # plt.show()
     print("---------------------------------------------------------------------------------")
+    print("You ran the algorithm this many times")
+    print(numberOfIterations)
     print("This is the number of found paths")
     print(numberOfFoundPaths)
     print("This is the average number of vertices along the paths")
-    print(sumOfPathLengths / numberOfIterations)
-    print("This is the total number of iterations")
+    print(sumOfVerticiesAlongAllPaths / numberOfIterations)
+    print("This is the total number of iterations for the algorithm")
     print(totalCount)
-    print("This is the average number of iterations")
+    print("This is the average number of iterations for the algorithm")
     print(totalCount / numberOfIterations)
+    print("This is the total lengths of all the paths")
+    print(sumOfAllLengths)
+    print("This is the average of all path lengths")
+    print(sumOfAllLengths / numberOfIterations)
 
 
 
