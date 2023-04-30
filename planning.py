@@ -156,6 +156,7 @@ def prm(
         distance_computator,
         collision_checker,
         k,
+        #TODO: If you edit this you need to edit the count in hw5
         numIt=100,
         tol=1e-3,
 ):

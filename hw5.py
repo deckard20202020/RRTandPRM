@@ -237,7 +237,7 @@ if __name__ == "__main__":
     # Our robot W=178 and L 138
 
     args = parse_args()
-    numberOfIterations = 10
+    numberOfIterations = 1
     sumOfVerticiesAlongAllPaths = 0
     numberOfFoundPaths = 0
     sumOfAllLengths = 0
@@ -300,10 +300,11 @@ if __name__ == "__main__":
             # This gets a very discretized path
             path = G.get_path(root, goal)
 
+        print("We are drawing the graph")
+        fig, ax = plt.subplots(1, 1)
+        draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
+        plt.show()
 
-        # fig, ax = plt.subplots(1, 1)
-        # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
-        # plt.show()
     print("---------------------------------------------------------------------------------")
     print("You ran the algorithm this many times")
     print(numberOfIterations)
