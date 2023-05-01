@@ -247,11 +247,12 @@ if __name__ == "__main__":
     startTime = time.time()
     endTime = 0
     totalTime = 0
+    totalStopConfigTime = 0
     for i in range(numberOfIterations):
         startTime = time.time()
         if args.alg == ALG_RRT:
             title = "RRT planning"
-            (G, root, goal, count) = rrt(
+            (G, root, goal, count, stoppingConfigTime) = rrt(
                 cspace=cspace,
                 qI=qI,
                 qG=qG,
@@ -279,14 +280,19 @@ if __name__ == "__main__":
         print("This is the sum of iterations so far for the algorithm")
         print(totalCount)
 
+        totalStopConfigTime = totalStopConfigTime + stoppingConfigTime
+
+        # End time if we have not found a path
+        endTime = time.time()
+
         path = []
         if root is not None and goal is not None:
 
             numberOfFoundPaths = numberOfFoundPaths + 1
             path = G.getVertexIdsAlongPath(root, goal)
 
+            # End time if we have found a path
             endTime = time.time()
-            totalTime = endTime - startTime
 
             print("These are the path Ids")
             print(path)
@@ -316,8 +322,9 @@ if __name__ == "__main__":
         # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
         # plt.show()
 
-    # endTime = time.time()
-    # totalTime = endTime - startTime
+        totalTime = totalTime + (endTime - startTime)
+
+    # Print Results for all iterations
     print("---------------------------------------------------------------------------------")
     print("You ran the algorithm this many times")
     print(numberOfIterations)
@@ -337,6 +344,10 @@ if __name__ == "__main__":
     print(totalTime)
     print("This is the average time for each iteration of the algorithm")
     print(totalTime / numberOfIterations)
+    print("This is the total stopping configurations time")
+    print(totalStopConfigTime)
+    print("This is the percentage of total time that was stopping configuration time")
+    print(totalStopConfigTime / totalTime)
 
 
 

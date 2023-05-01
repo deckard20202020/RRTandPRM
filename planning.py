@@ -1,4 +1,6 @@
 import random
+import time
+
 import numpy as np
 from graph import Tree, GraphCC
 from edge import EdgeStraight
@@ -120,6 +122,7 @@ def rrt(
     G = Tree()
     root = G.add_vertex(np.array(qI))
     count = 0
+    totalStoppingConfigurationTime = 0
     for i in range(numIt):
         count = count + 1
         use_goal = qG is not None and random.uniform(0, 1) <= pG
@@ -133,9 +136,13 @@ def rrt(
             alpha = np.array(qG)
         vn = G.get_nearest(alpha, distance_computator, tol)
         qn = G.get_vertex_state(vn)
+        stoppingConfigurationStartTime = time.time()
         (qs, edge) = stopping_configuration(
             qn, alpha, edge_creator, collision_checker, tol
         )
+        stoppingCongigurationEndTime = time.time()
+        currentIterationStoppingConfigurationTime = stoppingCongigurationEndTime - stoppingConfigurationStartTime
+        totalStoppingConfigurationTime = totalStoppingConfigurationTime + currentIterationStoppingConfigurationTime
         if qs is None or edge is None:
             continue
         dist = get_euclidean_distance(qn, qs)
@@ -143,9 +150,9 @@ def rrt(
             vs = G.add_vertex(qs)
             G.add_edge(vn, vs, edge)
             if use_goal and get_euclidean_distance(qs, qG) < tol:
-                return (G, root, vs, count)
+                return (G, root, vs, count, totalStoppingConfigurationTime)
 
-    return (G, root, None, count)
+    return (G, root, None, count, totalStoppingConfigurationTime)
 
 
 def prm(
