@@ -239,14 +239,16 @@ if __name__ == "__main__":
     # Our robot W=178 and L 138
 
     args = parse_args()
-    numberOfIterations = 1
+    numberOfIterations = 10
     sumOfVerticiesAlongAllPaths = 0
     numberOfFoundPaths = 0
     sumOfAllLengths = 0
     totalCount = 0
     startTime = time.time()
     endTime = 0
+    totalTime = 0
     for i in range(numberOfIterations):
+        startTime = time.time()
         if args.alg == ALG_RRT:
             title = "RRT planning"
             (G, root, goal, count) = rrt(
@@ -269,7 +271,7 @@ if __name__ == "__main__":
                 k=15,
             )
             #TODO: If you edit this you need to edit PRM
-            count = 200
+            count = 25
 
         print("This is the number of iterations for the algorithm")
         print(count)
@@ -282,6 +284,10 @@ if __name__ == "__main__":
 
             numberOfFoundPaths = numberOfFoundPaths + 1
             path = G.getVertexIdsAlongPath(root, goal)
+
+            endTime = time.time()
+            totalTime = endTime - startTime
+
             print("These are the path Ids")
             print(path)
 
@@ -303,15 +309,15 @@ if __name__ == "__main__":
 
             # This gets a very discretized path
             # This is what I want to send to ROS
-            path = G.get_path(root, goal)
+            # path = G.get_path(root, goal)
 
-        print("We are drawing the graph")
-        fig, ax = plt.subplots(1, 1)
-        draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
-        plt.show()
+        # print("We are drawing the graph")
+        # fig, ax = plt.subplots(1, 1)
+        # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
+        # plt.show()
 
-    endTime = time.time()
-    totalTime = endTime - startTime
+    # endTime = time.time()
+    # totalTime = endTime - startTime
     print("---------------------------------------------------------------------------------")
     print("You ran the algorithm this many times")
     print(numberOfIterations)

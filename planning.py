@@ -157,7 +157,7 @@ def prm(
         collision_checker,
         k,
         #TODO: If you edit this you need to edit the count in hw5
-        numIt=200,
+        numIt=25,
         tol=1e-3,
 ):
     """PRM with obstacles

@@ -62,37 +62,40 @@ def is_inside_circle(c, r, p):
     length = 138
     radius = findRadiusOfRobot(width, length)
 
-    # p will be the center of our robot
-    robotPoint = (p[0], p[1])
-    # print("This is RobotPoint")
-    # print(robotPoint)
-    # print()
+    # Updating to avoid shapely
+    return (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 <= (r + radius) ** 2
 
-    # Make a circle surrounding the robot
-    robotCircle = Point(robotPoint).buffer(radius)
-    # print("This is the type of the robot circle")
-    # print(type (robotCircle))
-
-    # Make a circle for the obstacle
-    obstacleCircle = Point(c).buffer(r)
-
-    # Make sure the robot circle doesn't intersect with the obstacle
-    if robotCircle.intersects(obstacleCircle):
-        return True
-
-    # # Check to see if robot is inside obstacle
-    # if robotCircle.within(obstacleCircle):
-    #     print("robot circle is inside obstacle circle")
+    # # p will be the center of our robot
+    # robotPoint = (p[0], p[1])
+    # # print("This is RobotPoint")
+    # # print(robotPoint)
+    # # print()
+    #
+    # # Make a circle surrounding the robot
+    # robotCircle = Point(robotPoint).buffer(radius)
+    # # print("This is the type of the robot circle")
+    # # print(type (robotCircle))
+    #
+    # # Make a circle for the obstacle
+    # obstacleCircle = Point(c).buffer(r)
+    #
+    # # Make sure the robot circle doesn't intersect with the obstacle
+    # if robotCircle.intersects(obstacleCircle):
     #     return True
     #
-    # # Check to see if obstacle circle is inside robot circle
-    # if obstacleCircle.within(robotCircle):
-    #     print("Obstacle circle is inside robot circle")
-    #     print()
-    #     return True
-
-    # print("Not In Collision")
-    return False
+    # # # Check to see if robot is inside obstacle
+    # # if robotCircle.within(obstacleCircle):
+    # #     print("robot circle is inside obstacle circle")
+    # #     return True
+    # #
+    # # # Check to see if obstacle circle is inside robot circle
+    # # if obstacleCircle.within(robotCircle):
+    # #     print("Obstacle circle is inside robot circle")
+    # #     print()
+    # #     return True
+    #
+    # # print("Not In Collision")
+    # return False
 
 
 def findRadiusOfRobot(w, l):
