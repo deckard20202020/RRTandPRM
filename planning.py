@@ -191,7 +191,9 @@ def prm(
         """Add configuration alpha to the roadmap G"""
         if collision_checker.is_in_collision(alpha):
             return None
+        # Time this
         neighbors = G.get_nearest_vertices(alpha, k, distance_computator)
+        # Time end
         vs = G.add_vertex(alpha)
         for vn in neighbors:
             if G.is_same_component(vn, vs):

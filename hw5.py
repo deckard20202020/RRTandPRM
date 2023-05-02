@@ -6,7 +6,7 @@ from planning import (
     prm,
     EdgeCreator,
     DistanceComputator,
-    ObstacleCollisionChecker,
+    ObstacleCollisionChecker, StraightEdgeCreator,
 )
 from dubins import shortest_path
 from edge import Edge
@@ -232,7 +232,8 @@ if __name__ == "__main__":
     obs_boundaries = [obstacle.get_boundaries() for obstacle in obstacles]
     world_boundary = WorldBoundary2D(cspace[0], cspace[1])
     obstacles.append(world_boundary)
-    edge_creator = DubinsEdgeCreator(rho_min, 0.1)
+    # edge_creator = DubinsEdgeCreator(rho_min, 0.1)
+    edge_creator = StraightEdgeCreator(0.1)
     collision_checker = ObstacleCollisionChecker(obstacles)
     distance_computator = DubinsDistanceComputator(rho_min)
 
@@ -248,6 +249,8 @@ if __name__ == "__main__":
     endTime = 0
     totalTime = 0
     totalStopConfigTime = 0
+    # PRM Timings
+    # 25, 50, 100, 200, 500, 1000, 2000
     for i in range(numberOfIterations):
         startTime = time.time()
         if args.alg == ALG_RRT:
