@@ -57,10 +57,19 @@ def is_inside_circle(c, r, p):
     # print(p)
     # print()
 
+
     # we know our robot has Width = 178 and Length = 138.  We will just hard code these for now
-    width = 178
-    length = 138
-    radius = findRadiusOfRobot(width, length)
+    widthOfRobot = 178
+    lengthOfRobot = 138
+    # Our radius is 226.23
+    radius = findRadiusOfRobot(widthOfRobot / 2, lengthOfRobot / 2)
+
+    # print("The radius of our robot")
+    # print(radius)
+    # print("this is the radius of our obstacle")
+    # print(r)
+    # print("Each point selected must be this far away from an obstacle")
+    # print(r + radius)
 
     # Updating to avoid shapely
     return (p[0] - c[0]) ** 2 + (p[1] - c[1]) ** 2 <= (r + radius) ** 2
@@ -100,7 +109,7 @@ def is_inside_circle(c, r, p):
 
 def findRadiusOfRobot(w, l):
 
-    radius = math.sqrt(w**2 + l**2)
+    radius = math.sqrt((w**2) + (l**2))
     # add one just to be on the safe side
     radius = radius + 1
 

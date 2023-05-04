@@ -240,7 +240,7 @@ if __name__ == "__main__":
     # Our robot W=178 and L 138
 
     args = parse_args()
-    numberOfIterations = 10
+    numberOfIterations = 1
     sumOfVerticiesAlongAllPaths = 0
     numberOfFoundPaths = 0
     sumOfAllLengths = 0
@@ -275,7 +275,7 @@ if __name__ == "__main__":
                 k=15,
             )
             #TODO: If you edit this you need to edit PRM
-            count = 25
+            count = 1000
 
         print("This is the number of iterations for the algorithm")
         print(count)
@@ -283,7 +283,7 @@ if __name__ == "__main__":
         print("This is the sum of iterations so far for the algorithm")
         print(totalCount)
 
-        totalStopConfigTime = totalStopConfigTime + stoppingConfigTime
+        # totalStopConfigTime = totalStopConfigTime + stoppingConfigTime
 
         # End time if we have not found a path
         endTime = time.time()
@@ -318,12 +318,12 @@ if __name__ == "__main__":
 
             # This gets a very discretized path
             # This is what I want to send to ROS
-            # path = G.get_path(root, goal)
+            path = G.get_path(root, goal)
 
         # print("We are drawing the graph")
-        # fig, ax = plt.subplots(1, 1)
-        # draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
-        # plt.show()
+        fig, ax = plt.subplots(1, 1)
+        draw(ax, cspace, obs_boundaries, qI, qG, G, path, title)
+        plt.show()
 
         totalTime = totalTime + (endTime - startTime)
 
